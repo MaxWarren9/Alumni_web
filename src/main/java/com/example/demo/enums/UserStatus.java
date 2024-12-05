@@ -1,6 +1,6 @@
 package com.example.demo.enums;
 
-public enum AlumniStatus {
+public enum UserStatus {
     CREATED,
     UPDATED,
     DELETED;

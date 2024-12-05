@@ -1,7 +1,7 @@
 package com.example.demo.service;
 
 
-import com.example.demo.enums.AlumniStatus;
+import com.example.demo.enums.UserStatus;
 import com.example.demo.model.db.entity.Alumni;
 import com.example.demo.model.db.repository.AlumniRepo;
 import com.example.demo.model.dto.request.AlumniInfoRequest;
@@ -30,7 +30,7 @@ public class AlumniService implements UserDetailsService {
             return null;
         }
         Alumni alumni = mapper.convertValue(request, Alumni.class);
-        alumni.setStatus(AlumniStatus.CREATED);
+        alumni.setStatus(UserStatus.CREATED);
         Alumni save = alumniRepo.save(alumni);
         return mapper.convertValue(save, AlumniInfoResponse.class);
     }
@@ -56,7 +56,7 @@ public class AlumniService implements UserDetailsService {
         alumni.setDateOfBirth(request.getDateOfBirth() == null ? alumni.getDateOfBirth() : request.getDateOfBirth());
         alumni.setGraduationYear(request.getGraduationYear() == null ? alumni.getGraduationYear() : request.getGraduationYear());
         alumni.setPassword(request.getPassword() == null ? alumni.getPassword() : request.getPassword());
-        alumni.setStatus(AlumniStatus.UPDATED);
+        alumni.setStatus(UserStatus.UPDATED);
         Alumni save = alumniRepo.save(alumni);
         return mapper.convertValue(save, AlumniInfoResponse.class);
     }

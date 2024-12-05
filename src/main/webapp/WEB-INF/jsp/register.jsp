@@ -11,7 +11,7 @@
 
 <body>
 <div>
-  <form:form method="POST" modelAttribute="user">
+  <form:form method="POST" modelAttribute="alumni">
     <h2>Регистрация</h2>
     <div>
       <form:input type="text" path="username" placeholder="Username"
