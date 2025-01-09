@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -39,6 +40,5 @@ public class Alumni extends User implements UserDetails {
             joinColumns = @JoinColumn(name = "alumni_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    Set<Role> roles;
-
+    Set<Role> roles = new HashSet<>();
 }
