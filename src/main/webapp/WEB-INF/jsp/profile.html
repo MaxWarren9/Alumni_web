@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Профиль выпускника</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<h1>Редактирование профиля</h1>
+<form action="/api/alumni/update" method="POST">
+    <label for="name">Имя:</label>
+    <input type="text" id="name" name="name" value="Иван Иванов">
+
+    <label for="year">Год выпуска:</label>
+    <input type="number" id="year" name="graduationYear" value="2015">
+
+    <label for="specialization">Специализация:</label>
+    <input type="text" id="specialization" name="specialization" value="IT">
+
+    <button type="submit">Сохранить</button>
+</form>
+</body>
+</html>

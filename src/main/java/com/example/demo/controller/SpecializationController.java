@@ -13,9 +13,8 @@ import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "Специализации")
 @RestController
+@RequestMapping("/api/specializations")
 @RequiredArgsConstructor
-
-    @RequestMapping("/api/specializations")
 
     public class SpecializationController {
 
@@ -50,9 +49,9 @@ import org.springframework.web.bind.annotation.*;
         }
 
         // Получить всех выпускников
-        @GetMapping("/all")
-        @Operation(summary = "Получить список пользователей")
-        public Page<SpecializationInfoResponse> getAllSpecialization(
+        @GetMapping
+        @Operation(summary = "Получить список специализаций")
+        public Page<SpecializationInfoResponse> getAllSpecializations(
             @RequestParam(defaultValue = "1") Integer page,
             @RequestParam(defaultValue = "10") Integer perPage,
             @RequestParam(defaultValue = "name") String sort,
@@ -60,9 +59,8 @@ import org.springframework.web.bind.annotation.*;
             @RequestParam(required = false) String filter
         )
         {
-            return specializationService.getAllSpecialization(page,perPage,sort,order,filter);
+            return specializationService.getAllSpecializations(page,perPage,sort,order,filter);
         }
-
 
 
     // Создать новую специализацию

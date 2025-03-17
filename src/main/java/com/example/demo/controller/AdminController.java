@@ -1,34 +1,37 @@
 package com.example.demo.controller;
 
 import com.example.demo.service.AlumniService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+@Controller
+@RequestMapping("/admin")
 public class AdminController {
-    @Autowired
-    private AlumniService alumniService;
 
-    @GetMapping("/admin")
+    private final AlumniService alumniService;
+    public AdminController(AlumniService alumniService) {
+        this.alumniService = alumniService;
+    }
+
+    @GetMapping
     public String userList(Model model) {
         model.addAttribute("allUsers", alumniService.getAllAlumni());
         return "admin";
     }
 
-    @PostMapping("/admin")
-    public String  deleteUser(@RequestParam(required = true, defaultValue = "" ) Long userId,
-                              @RequestParam(required = true, defaultValue = "" ) String action,
-                              Model model) {
+    @PostMapping
+    public String  deleteUser(@RequestParam Long userId,
+                              @RequestParam String action) {
         if (action.equals("delete")){
             alumniService.deleteAlumni(userId);
         }
         return "redirect:/admin";
     }
 
-    @GetMapping("/admin/get/{userId}")
-    public String  gtUser(@PathVariable("userId") Long userId, Model model) {
-        model.addAttribute("allUsers", alumniService.getAlumni(userId));
+    @GetMapping("/get/{userId}")
+    public String getUser(@PathVariable Long userId, Model model) {
+        model.addAttribute("user", alumniService.getAlumni(userId));
         return "admin";
     }
 }

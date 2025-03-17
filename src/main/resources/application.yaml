@@ -5,10 +5,16 @@ spring:
     view:
       prefix: "/WEB-INF/jsp/"
       suffix: ".jsp"
-
-
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    cache: false
   datasource:
-    url: jdbc:postgresql://localhost:5433/itmo_diploma
+    url: jdbc:postgresql://localhost:5433/itmo_diploma?charSet=UTF-8
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver
@@ -18,7 +24,7 @@ spring:
     show-sql: true
     generate-ddl: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect

@@ -30,7 +30,7 @@ public class User implements UserDetails{
     private String email;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private UserStatus status;
+    private UserStatus status = UserStatus.CREATED;
 
 
     @ManyToMany(fetch = FetchType.EAGER)

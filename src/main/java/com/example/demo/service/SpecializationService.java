@@ -52,7 +52,7 @@ public class SpecializationService {
         return null;
     }
 
-    public Page<SpecializationInfoResponse> getAllSpecialization(Integer page, Integer perPage, String sort, Sort.Direction order, String filter) {
+    public Page<SpecializationInfoResponse> getAllSpecializations(Integer page, Integer perPage, String sort, Sort.Direction order, String filter) {
 
         Pageable pageRequest = PaginationUtil.getPageRequest(page, perPage, sort, order);
 
@@ -80,10 +80,9 @@ public class SpecializationService {
             return;
         }
         alumniFromDB.getSpecializations().add(specialization);
-
         alumniService.updateAlumniData(alumniFromDB);
 
-        specialization.setAlumni(alumniFromDB);
+        specialization.getAlumni().add(alumniFromDB);
         specializationRepo.save(specialization);
     }
 }

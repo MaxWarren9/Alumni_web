@@ -11,9 +11,8 @@ import java.util.List;
 
 @Tag(name = "Выпускники")
 @RestController
+@RequestMapping("/api/alumni")
 @RequiredArgsConstructor
-
-    @RequestMapping("/api/alumni")
 
     public class AlumniController {
 
