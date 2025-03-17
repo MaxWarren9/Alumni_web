@@ -95,8 +95,29 @@
     <!-- Username -->
     <div class="form-group">
       <label for="username">Имя пользователя</label>
-      <form:input type="text" path="username" id="username" name="username" placeholder="Введите имя пользователя" />
+      <form:input type="text" path="username" id="username" name="username" placeholder="Введите никнейм пользователя" />
       <form:errors path="username" cssClass="error" />
+    </div>
+
+    <!-- First Name -->
+    <div class="form-group">
+      <label for="firstName">Имя</label>
+      <form:input type="text" path="firstName" id="firstName" name="firstName" placeholder="Введите имя" />
+      <form:errors path="firstName" cssClass="error" />
+    </div>
+
+    <!-- Last Name -->
+    <div class="form-group">
+      <label for="lastName">Фамилия</label>
+      <form:input type="text" path="lastName" id="lastName" name="lastName" placeholder="Введите фамилию" />
+      <form:errors path="lastName" cssClass="error" />
+    </div>
+
+    <!-- Graduation Year -->
+    <div class="form-group">
+      <label for="graduationYear">Год выпуска</label>
+      <form:input type="number" path="graduationYear" id="graduationYear" name="graduationYear" placeholder="Введите год выпуска" />
+      <form:errors path="graduationYear" cssClass="error" />
     </div>
 
     <!-- Email -->

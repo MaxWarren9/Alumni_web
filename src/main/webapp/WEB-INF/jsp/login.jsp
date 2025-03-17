@@ -91,7 +91,7 @@
 <div class="login-container">
   <h2>Вход в систему</h2>
   <form method="POST" action="/login">
-    <input name="username" type="text" placeholder="Username" required autofocus="true" />
+    <input name="username" type="text" placeholder="Username" required/>
     <input name="password" type="password" placeholder="Password" required />
     <button type="submit">Log In</button>
   </form>

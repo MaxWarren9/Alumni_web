@@ -83,10 +83,11 @@
 
     <sec:authorize access="isAuthenticated()">
         <h4><a class="btn btn-logout" href="/logout">Выйти</a></h4>
-    </sec:authorize>
 
-    <h4><a href="/news">Новости (только пользователь)</a></h4>
-    <h4><a href="/admin">Пользователи (только админ)</a></h4>
+        <h4><a href="/specializations">Список специализаций</a></h4>
+        <h4><a href="/alumni">Список выпускников</a></h4>
+        <h4><a href="/profile">Личный профиль</a></h4>
+    </sec:authorize>
 </div>
 </body>
 </html>
