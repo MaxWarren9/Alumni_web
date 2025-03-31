@@ -18,6 +18,11 @@ spring:
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver
+  security:
+    user:
+      name: admin
+      password: admin
+
 
   jpa:
     database: postgresql

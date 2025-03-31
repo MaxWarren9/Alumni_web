@@ -1,5 +1,6 @@
 package com.example.demo.model.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,11 +26,12 @@ public class Role {
         this.name = name;
     }
 
-    @ManyToMany(mappedBy = "roles")
-    private Set<User> users = new HashSet<>();
+//    @ManyToMany(mappedBy = "roles")
+//    private Set<User> users = new HashSet<>();
 
     @ManyToMany(mappedBy = "roles")
-    private Set<Alumni> alumni = new HashSet<>();
+    @JsonIgnore
+    private Set<Alumni> users = new HashSet<>();
 
 
 }

@@ -31,10 +31,30 @@ public class Alumni extends User implements UserDetails {
     @Column(name = "gender")
     Gender gender;
 
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
     @ManyToMany
     @JoinTable(
             name = "alumni_specializations",
-            joinColumns = @JoinColumn(name =  "alumni_id"),
+            joinColumns = @JoinColumn(name = "alumni_id"),
             inverseJoinColumns = @JoinColumn(name = "specialization_id")
     )
     @JsonManagedReference(value = "alumni_specialization")
