@@ -1,4 +1,5 @@
 package com.example.demo.controller;
+
 import com.example.demo.model.dto.request.AlumniInfoRequest;
 import com.example.demo.model.dto.response.AlumniInfoResponse;
 import com.example.demo.service.AlumniService;
@@ -18,6 +19,14 @@ import java.util.List;
 
         private final AlumniService alumniService;
 
+        // Получить всех выпускников
+        @GetMapping()
+        @Operation(summary = "Получить список пользователей")
+        public List<AlumniInfoResponse> getAllAlumni() {
+            return alumniService.getAllAlumni();
+        }
+
+        // Добавить нового выпускника
         @PostMapping
         @Operation(summary = "Создать выпускника")
         public AlumniInfoResponse createAlumni(@RequestBody AlumniInfoRequest request) {
@@ -43,12 +52,5 @@ import java.util.List;
         @Operation(summary = "Удалить выпускника по id")
         public void deleteAlumni(@PathVariable long id){
             alumniService.deleteAlumni(id);
-        }
-
-        // Получить всех выпускников
-        @GetMapping("/all")
-        @Operation(summary = "Получить список пользователей")
-        public List<AlumniInfoResponse> getAllAlumni() {
-            return alumniService.getAllAlumni();
         }
     }

@@ -96,7 +96,7 @@
     <button type="submit">Log In</button>
   </form>
   <div class="register-link">
-    <h4><a href="/registration">Зарегистрироваться</a></h4>
+    <h4><a href="/register">Зарегистрироваться</a></h4>
   </div>
 </div>
 
