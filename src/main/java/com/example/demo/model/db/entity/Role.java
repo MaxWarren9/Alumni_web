@@ -26,12 +26,9 @@ public class Role {
         this.name = name;
     }
 
-//    @ManyToMany(mappedBy = "roles")
-//    private Set<User> users = new HashSet<>();
 
     @ManyToMany(mappedBy = "roles")
     @JsonIgnore
     private Set<Alumni> users = new HashSet<>();
-
 
 }

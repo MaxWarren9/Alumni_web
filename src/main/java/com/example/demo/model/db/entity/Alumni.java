@@ -59,6 +59,8 @@ public class Alumni extends User implements UserDetails {
     )
     @JsonManagedReference(value = "alumni_specialization")
     Set<Specialization> specializations = new HashSet<>();
+
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "alumni_roles",
