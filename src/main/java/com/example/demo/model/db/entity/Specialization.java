@@ -22,6 +22,6 @@ public class Specialization {
     private String name;
 
     @ManyToMany(mappedBy = "specializations")
-    @JsonBackReference
+    @JsonBackReference("alumni_specialization")
     private Set<Alumni> alumni = new HashSet<>();
 }

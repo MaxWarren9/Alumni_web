@@ -11,5 +11,5 @@ import java.util.Optional;
 public interface AlumniRepo extends JpaRepository<Alumni, Long> {
     List<Alumni> findBySpecializationsAndGraduationYear(String specialization, int graduationYear);
     Optional<Alumni> findByUsername(String username);
-
+    Optional<Alumni> findByEmail(String email);
 }

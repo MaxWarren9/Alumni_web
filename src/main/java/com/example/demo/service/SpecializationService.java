@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 
 import com.example.demo.Utils.PaginationUtil;
+import com.example.demo.exceptions.CustomException;
 import com.example.demo.model.db.entity.Alumni;
 import com.example.demo.model.db.entity.Specialization;
 import com.example.demo.model.db.repository.SpecializationRepo;
@@ -9,23 +10,26 @@ import com.example.demo.model.dto.request.SpecializationInfoRequest;
 import com.example.demo.model.dto.request.SpecializationToAlumniRequest;
 import com.example.demo.model.dto.response.SpecializationInfoResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
+
 public class SpecializationService {
 
     private final ObjectMapper mapper;
     private final SpecializationRepo specializationRepo;
     private final AlumniService alumniService;
+
 
     public SpecializationInfoResponse createSpecialization(SpecializationInfoRequest request) {
         Specialization specialization = mapper.convertValue(request, Specialization.class);
@@ -35,7 +39,7 @@ public class SpecializationService {
 
     public SpecializationInfoResponse getSpecialization(long id) {
         Specialization specialization = specializationRepo.findById(id).orElse(new Specialization());
-        return mapper.convertValue(specialization,SpecializationInfoResponse.class);
+        return mapper.convertValue(specialization, SpecializationInfoResponse.class);
     }
 
     public Specialization getSpecializationFromDB(long id) {
@@ -43,13 +47,14 @@ public class SpecializationService {
     }
 
     public SpecializationInfoResponse updateSpecialization(long id, SpecializationInfoRequest request) {
-        return SpecializationInfoResponse.builder()
-                .name(request.getName())
-                .build();
+        Specialization specialization = getSpecializationFromDB(id);
+        specialization.setName(request.getName());
+        Specialization save = specializationRepo.save(specialization);
+        return mapper.convertValue(save, SpecializationInfoResponse.class);
     }
 
-    public SpecializationInfoResponse deleteSpecialization(long id) {
-        return null;
+    public void deleteSpecialization(long id) {
+        specializationRepo.deleteById(id);
     }
 
     public Page<SpecializationInfoResponse> getAllSpecializations(Integer page, Integer perPage, String sort, Sort.Direction order, String filter) {
@@ -70,14 +75,11 @@ public class SpecializationService {
     }
 
     public void addSpecializationToAlumni(SpecializationToAlumniRequest request) {
-        Specialization specialization = specializationRepo.findById(request.getSpecializationId()).orElse(null);
-        if(specialization == null) {
-            return;
-        }
+        Specialization specialization = specializationRepo.findById(request.getSpecializationId()).orElseThrow(() -> new CustomException("Specialization not found", HttpStatus.NOT_FOUND));
         Alumni alumniFromDB = alumniService.getAlumniFromDB(request.getAlumniId());
 
-        if(alumniFromDB == null){
-            return;
+        if (alumniFromDB == null) {
+            throw new CustomException("Alumni not found", HttpStatus.NOT_FOUND);
         }
         alumniFromDB.getSpecializations().add(specialization);
         alumniService.updateAlumniData(alumniFromDB);

@@ -8,7 +8,7 @@ import com.example.demo.model.db.repository.AlumniRepo;
 import com.example.demo.model.dto.request.AlumniInfoRequest;
 import com.example.demo.model.dto.response.AlumniInfoResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class AlumniService implements UserDetailsService {
 
     private final ObjectMapper mapper;
@@ -47,7 +47,7 @@ public class AlumniService implements UserDetailsService {
 
     public AlumniInfoResponse getAlumni(long id) {
         Alumni alumni = alumniRepo.findById(id).orElse(new Alumni());
-        return mapper.convertValue(alumni,AlumniInfoResponse.class);
+        return mapper.convertValue(alumni, AlumniInfoResponse.class);
     }
 
     public Alumni getAlumniFromDB(Long id) {
