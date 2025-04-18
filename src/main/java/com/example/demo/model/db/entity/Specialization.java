@@ -17,10 +17,11 @@ public class Specialization {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
     @ManyToMany(mappedBy = "specializations")
-    @JsonBackReference
+    @JsonBackReference("alumni_specialization")
     private Set<Alumni> alumni = new HashSet<>();
 }

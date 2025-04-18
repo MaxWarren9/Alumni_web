@@ -4,7 +4,6 @@ import com.example.demo.model.db.entity.Alumni;
 import com.example.demo.model.db.repository.AlumniRepo;
 import com.example.demo.model.db.repository.RoleRepo;
 import com.example.demo.model.security.CustomUserDetails;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -13,10 +12,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
-    @Autowired
-    private AlumniRepo alumniRepo;
-    @Autowired
-    private RoleRepo roleRepo;
+    private final AlumniRepo alumniRepo;
+    private final RoleRepo roleRepo;
+
+    public CustomUserDetailsService(AlumniRepo alumniRepo, RoleRepo roleRepo) {
+        this.alumniRepo = alumniRepo;
+        this.roleRepo = roleRepo;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

@@ -2,7 +2,6 @@ package com.example.demo.model.db.repository;
 
 
 import com.example.demo.model.db.entity.Specialization;
-import org.hibernate.validator.constraints.ParameterScriptAssert;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,13 +9,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
 public interface SpecializationRepo extends JpaRepository<Specialization, Long> {
     Specialization findByName(String name);
-
-//    List<Specialization> findAllByName(String name);
 
     @Query(nativeQuery = true, value = "select * from specializations where id = 1")
     Specialization getSpecialization();

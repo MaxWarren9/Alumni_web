@@ -1,7 +1,6 @@
 package com.example.demo.model.db.entity;
 
 import com.example.demo.enums.Gender;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -57,8 +56,9 @@ public class Alumni extends User implements UserDetails {
             joinColumns = @JoinColumn(name = "alumni_id"),
             inverseJoinColumns = @JoinColumn(name = "specialization_id")
     )
-    @JsonManagedReference(value = "alumni_specialization")
-    Set<Specialization> specializations = new HashSet<>();
+    private Set<Specialization> specializations = new HashSet<>();
+
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "alumni_roles",
@@ -66,4 +66,5 @@ public class Alumni extends User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     Set<Role> roles = new HashSet<>();
+
 }

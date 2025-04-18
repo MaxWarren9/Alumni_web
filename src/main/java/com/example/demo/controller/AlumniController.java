@@ -20,7 +20,7 @@ import java.util.List;
         private final AlumniService alumniService;
 
         // Получить всех выпускников
-        @GetMapping()
+        @GetMapping("/all")
         @Operation(summary = "Получить список пользователей")
         public List<AlumniInfoResponse> getAllAlumni() {
             return alumniService.getAllAlumni();

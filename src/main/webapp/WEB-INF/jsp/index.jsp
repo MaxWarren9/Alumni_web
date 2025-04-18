@@ -85,7 +85,7 @@
         <h4><a class="btn btn-logout" href="/logout">Выйти</a></h4>
 
         <h4><a href="/api/specializations">Список специализаций</a></h4>
-        <h4><a href="/api/alumni">Список выпускников</a></h4>
+        <h4><a href="/api/alumni/all">Список выпускников</a></h4>
         <h4><a href="/api/profile">Личный профиль</a></h4>
     </sec:authorize>
 </div>

@@ -2,58 +2,66 @@ package com.example.demo.service;
 
 
 import com.example.demo.enums.UserStatus;
+import com.example.demo.exceptions.CustomException;
 import com.example.demo.model.db.entity.Alumni;
 import com.example.demo.model.db.repository.AlumniRepo;
 import com.example.demo.model.dto.request.AlumniInfoRequest;
 import com.example.demo.model.dto.response.AlumniInfoResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.apache.commons.validator.routines.EmailValidator;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class AlumniService implements UserDetailsService {
 
     private final ObjectMapper mapper;
-    @Autowired
+
     private final AlumniRepo alumniRepo;
 
-    public AlumniInfoResponse createAlumni(AlumniInfoRequest request) {
+    private void validateEmail(AlumniInfoRequest request) {
         if(!EmailValidator.getInstance().isValid(request.getEmail())) {
-            return null;
+            throw new CustomException("Invalid email", HttpStatus.BAD_REQUEST);
         }
+    }
+
+    public AlumniInfoResponse createAlumni(AlumniInfoRequest request) {
+        validateEmail(request);
+
         Alumni alumni = mapper.convertValue(request, Alumni.class);
         alumni.setStatus(UserStatus.CREATED);
         Alumni save = alumniRepo.save(alumni);
+
         return mapper.convertValue(save, AlumniInfoResponse.class);
     }
 
+
+
     public AlumniInfoResponse getAlumni(long id) {
         Alumni alumni = alumniRepo.findById(id).orElse(new Alumni());
-        return mapper.convertValue(alumni,AlumniInfoResponse.class);
+        return mapper.convertValue(alumni, AlumniInfoResponse.class);
     }
 
     public Alumni getAlumniFromDB(Long id) {
-        return alumniRepo.findById(id).orElse(null);
+        return alumniRepo.findById(id).orElseThrow(() -> new CustomException("Alumni not found", HttpStatus.NOT_FOUND));
     }
 
     public AlumniInfoResponse updateAlumni(long id, AlumniInfoRequest request) {
-        if(!EmailValidator.getInstance().isValid(request.getEmail())) {
-            return null;
-        }
+        validateEmail(request);
         Alumni alumni = getAlumniFromDB(id);
         alumni.setEmail(request.getEmail());
         alumni.setGender(request.getGender() == null ? alumni.getGender() : request.getGender());
         alumni.setFirstName(request.getFirstName() == null ? alumni.getFirstName() : request.getFirstName());
         alumni.setLastName(request.getLastName() == null ? alumni.getLastName() : request.getLastName());
-        alumni.setDateOfBirth(request.getDateOfBirth() == null ? alumni.getDateOfBirth() : request.getDateOfBirth());
+        alumni.setDateOfBirth(request.getDateOfBirth());
         alumni.setGraduationYear(request.getGraduationYear() == null ? alumni.getGraduationYear() : request.getGraduationYear());
         alumni.setPassword(request.getPassword() == null ? alumni.getPassword() : request.getPassword());
         alumni.setStatus(UserStatus.UPDATED);
@@ -77,8 +85,7 @@ public class AlumniService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Alumni alumni = alumniRepo.findByUsername(username)
+        return alumniRepo.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
-        return alumni;
     }
 }
