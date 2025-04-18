@@ -43,7 +43,7 @@ public class SpecializationService {
     }
 
     public Specialization getSpecializationFromDB(long id) {
-        return specializationRepo.findById(id).orElse(new Specialization());
+        return specializationRepo.findById(id).orElseThrow(() -> new CustomException("Specialization not found", HttpStatus.NOT_FOUND));
     }
 
     public SpecializationInfoResponse updateSpecialization(long id, SpecializationInfoRequest request) {
@@ -57,8 +57,8 @@ public class SpecializationService {
         specializationRepo.deleteById(id);
     }
 
-    public Page<SpecializationInfoResponse> getAllSpecializations(Integer page, Integer perPage, String sort, Sort.Direction order, String filter) {
-
+    public Page<SpecializationInfoResponse> getAllSpecializations(Integer page, Integer perPage, String sort,
+                                                                  Sort.Direction order, String filter) {
         Pageable pageRequest = PaginationUtil.getPageRequest(page, perPage, sort, order);
 
         Page<Specialization> specializationPage;
@@ -68,14 +68,16 @@ public class SpecializationService {
             specializationPage = specializationRepo.findAllByName(filter, pageRequest);
         }
         List<SpecializationInfoResponse> content = specializationPage.getContent().stream()
-                .map(specialization -> mapper.convertValue(specialization, SpecializationInfoResponse.class))
+                .map(specialization -> mapper.convertValue(specialization, SpecializationInfoResponse.
+                        class))
                 .collect(Collectors.toList());
 
         return new PageImpl<>(content, pageRequest, specializationPage.getTotalElements());
     }
 
     public void addSpecializationToAlumni(SpecializationToAlumniRequest request) {
-        Specialization specialization = specializationRepo.findById(request.getSpecializationId()).orElseThrow(() -> new CustomException("Specialization not found", HttpStatus.NOT_FOUND));
+        Specialization specialization = specializationRepo.findById(request.getSpecializationId()).orElseThrow(() ->
+                new CustomException("Specialization not found", HttpStatus.NOT_FOUND));
         Alumni alumniFromDB = alumniService.getAlumniFromDB(request.getAlumniId());
 
         if (alumniFromDB == null) {
@@ -87,4 +89,6 @@ public class SpecializationService {
         specialization.getAlumni().add(alumniFromDB);
         specializationRepo.save(specialization);
     }
+
+
 }

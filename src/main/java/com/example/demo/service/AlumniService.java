@@ -61,7 +61,7 @@ public class AlumniService implements UserDetailsService {
         alumni.setGender(request.getGender() == null ? alumni.getGender() : request.getGender());
         alumni.setFirstName(request.getFirstName() == null ? alumni.getFirstName() : request.getFirstName());
         alumni.setLastName(request.getLastName() == null ? alumni.getLastName() : request.getLastName());
-        alumni.setDateOfBirth(request.getDateOfBirth() == null ? alumni.getDateOfBirth() : request.getDateOfBirth());
+        alumni.setDateOfBirth(request.getDateOfBirth());
         alumni.setGraduationYear(request.getGraduationYear() == null ? alumni.getGraduationYear() : request.getGraduationYear());
         alumni.setPassword(request.getPassword() == null ? alumni.getPassword() : request.getPassword());
         alumni.setStatus(UserStatus.UPDATED);

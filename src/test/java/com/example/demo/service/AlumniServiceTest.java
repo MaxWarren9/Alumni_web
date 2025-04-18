@@ -136,7 +136,7 @@ public class AlumniServiceTest {
         alumniInfoRequest.setFirstName(null);
         alumniInfoRequest.setLastName(null);
         alumniInfoRequest.setGraduationYear(null);
-        alumniInfoRequest.setDateOfBirth(null);
+        alumniInfoRequest.setDateOfBirth(LocalDate.of(2020, 1, 1));
 
         Alumni alumni = new Alumni();
         alumni.setId(1L);
