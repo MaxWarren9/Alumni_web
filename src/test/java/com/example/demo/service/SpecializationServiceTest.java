@@ -94,7 +94,7 @@ public class SpecializationServiceTest {
 
     @Test
     public void deleteSpecialization() {
-        Long specializationId = 1L;
+        long specializationId = 1L;
         specializationService.deleteSpecialization(specializationId);
         verify(specializationRepo, times(1)).deleteById(specializationId);
     }
@@ -183,8 +183,8 @@ public class SpecializationServiceTest {
 
     @Test(expected = CustomException.class)
     public void addSpecializationToAlumni_shouldThrowIfSpecializationNotFound() {
-        Long specializationId = 1L;
-        Long alumniId = 2L;
+        long specializationId = 1L;
+        long alumniId = 2L;
 
         when(specializationRepo.findById(specializationId)).thenReturn(Optional.empty());
 

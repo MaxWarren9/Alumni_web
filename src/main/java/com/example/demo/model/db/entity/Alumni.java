@@ -67,4 +67,14 @@ public class Alumni extends User implements UserDetails {
     )
     Set<Role> roles = new HashSet<>();
 
+    @OneToMany(mappedBy = "alumni")
+    private Set<Playlist> playlists = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "alumni_tracks",
+            joinColumns = @JoinColumn(name = "alumni_id"),
+            inverseJoinColumns = @JoinColumn(name = "track_id")
+    )
+    private Set<Track> tracks = new HashSet<>();
 }
