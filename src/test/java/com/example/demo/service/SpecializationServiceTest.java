@@ -48,6 +48,7 @@ public class SpecializationServiceTest {
 
         Specialization specialization = new Specialization();
         specialization.setId(1L);
+        specialization.setName("test specialization");
 
         when(specializationRepo.save(any(Specialization.class))).thenReturn(specialization);
 
@@ -60,6 +61,7 @@ public class SpecializationServiceTest {
     public void getSpecialization() {
         Specialization specialization = new Specialization();
         specialization.setId(1L);
+        specialization.setName("test specialization");
 
         when(specializationRepo.findById(1L)).thenReturn(Optional.of(specialization));
         SpecializationInfoResponse specializationInfoResponse = specializationService.getSpecialization(1L);
@@ -163,6 +165,8 @@ public class SpecializationServiceTest {
                 .alumniId(alumni.getId())
                 .build();
         specializationService.addSpecializationToAlumni(specializationToAlumniRequest);
+
+        verify(alumniService, times(1)).getAlumniFromDB(1L);
     }
 
     @Test(expected = CustomException.class)

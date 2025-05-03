@@ -20,7 +20,7 @@ public class Playlist {
 
     private String playlistName;
     private String playlistOwner;
-    LocalDate createDate;
+    private LocalDate createDate;
 
     @ManyToOne
     @JsonIgnore

@@ -1,9 +1,7 @@
 package com.example.demo.model.db.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -15,8 +13,7 @@ import java.util.Set;
 @Table(name = "tracks")
 @Getter
 @Setter
-@AllArgsConstructor
-@RequiredArgsConstructor
+
 public class Track{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

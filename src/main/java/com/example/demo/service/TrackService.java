@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.Utils.PaginationUtil;
 import com.example.demo.exceptions.CustomException;
 import com.example.demo.model.db.entity.Alumni;
 import com.example.demo.model.db.entity.Playlist;
@@ -10,7 +11,7 @@ import com.example.demo.model.dto.request.TrackToAlumniRequest;
 import com.example.demo.model.dto.request.TrackToPlaylistRequest;
 import com.example.demo.model.dto.response.TrackInfoResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -19,12 +20,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class TrackService {
     private final ObjectMapper mapper;
     private final TrackRepo trackRepo;
     private final PlaylistService playlistService;
-    private AlumniService alumniService;
+    private final AlumniService alumniService;
 
     public TrackInfoResponse createTrack(TrackInfoRequest trackInfoRequest) {
         Track track = mapper.convertValue(trackInfoRequest, Track.class);
@@ -41,31 +42,13 @@ public class TrackService {
                 HttpStatus.NOT_FOUND));
     }
 
-//    public Page<TrackInfoResponse> getAllTracks(Integer page, Integer perPage, String sort, Sort.Direction order, String filter) {
-//        Pageable pageRequest = PaginationUtil.getPageRequest(page, perPage, sort, order);
-//        Page<Track> trackPage;
-//        if (filter == null || filter.isEmpty()) {
-//            trackPage = trackRepo.findAll(pageRequest);
-//        } else {
-//            trackPage = trackRepo.findAllByTrackName(filter, pageRequest);
-//        }
-//
-//        List<TrackInfoResponse> content = trackPage.getContent().stream()
-//                .map(p -> mapper.convertValue(p, TrackInfoResponse.class))
-//                .collect(Collectors.toList());
-//
-//        return new PageImpl<>(content, pageRequest, trackPage.getTotalElements());
-//    }
-
     public Page<TrackInfoResponse> getAllTracks(Integer page, Integer perPage, String sort, Sort.Direction order, String filter) {
-
-        Pageable pageRequest = PageRequest.of(page, perPage, Sort.by(order, sort));
+        Pageable pageRequest = PaginationUtil.getPageRequest(page, perPage, sort, order);
         Page<Track> trackPage;
-
         if (filter == null || filter.isEmpty()) {
             trackPage = trackRepo.findAll(pageRequest);
         } else {
-            trackPage = trackRepo.findAllByTrackNameJPQL("%" + filter + "%", pageRequest);
+            trackPage = trackRepo.findAllByTrackNameJPQL(filter, pageRequest);
         }
 
         List<TrackInfoResponse> content = trackPage.getContent().stream()
@@ -75,12 +58,13 @@ public class TrackService {
         return new PageImpl<>(content, pageRequest, trackPage.getTotalElements());
     }
 
+
     public TrackInfoResponse updateTrack(long trackId, TrackInfoRequest trackInfoRequest) {
         Track track = getTrackFromDb(trackId);
         track.setTrackName(trackInfoRequest.getTrackName());
         track.setTrackArtist(trackInfoRequest.getTrackArtist());
         track.setTrackAlbum(trackInfoRequest.getTrackAlbum() == null ? track.getTrackAlbum() : trackInfoRequest.getTrackAlbum());
-        track.setTrackGenre(trackInfoRequest.getTrackGenre()==null ? track.getTrackGenre() : trackInfoRequest.getTrackGenre());
+        track.setTrackGenre(trackInfoRequest.getTrackGenre()== null ? track.getTrackGenre() : trackInfoRequest.getTrackGenre());
         track.setTrackDuration(trackInfoRequest.getTrackDuration() == null ? track.getTrackDuration() : trackInfoRequest.getTrackDuration());
         trackRepo.save(track);
         return mapper.convertValue(track, TrackInfoResponse.class);

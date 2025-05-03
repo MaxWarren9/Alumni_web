@@ -34,7 +34,7 @@ public class PlaylistController {
     public ResponseEntity<List<PlaylistInfoResponse>> getAllPlaylists(
             @RequestParam(defaultValue = "1") Integer page,
             @RequestParam(defaultValue = "10") Integer perPage,
-            @RequestParam(defaultValue = "name") String sort,
+            @RequestParam(defaultValue = "playlistName") String sort,
             @RequestParam(defaultValue = "ASC") Sort.Direction order,
             @RequestParam(required = false) String filter,
             Model model) {

@@ -37,7 +37,7 @@ public class TrackController {
     public ResponseEntity<List<TrackInfoResponse>> getAllTracks(
             @RequestParam(defaultValue = "1") Integer page,
             @RequestParam(defaultValue = "10") Integer perPage,
-            @RequestParam(defaultValue = "name") String sort,
+            @RequestParam(defaultValue = "trackName") String sort,
             @RequestParam(defaultValue = "ASC") Sort.Direction order,
             @RequestParam(required = false) String filter,
             Model model) {

@@ -8,7 +8,7 @@ import com.example.demo.model.db.repository.AlumniRepo;
 import com.example.demo.model.dto.request.AlumniInfoRequest;
 import com.example.demo.model.dto.response.AlumniInfoResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class AlumniService implements UserDetailsService {
 
     private final ObjectMapper mapper;

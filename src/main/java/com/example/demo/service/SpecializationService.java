@@ -10,7 +10,7 @@ import com.example.demo.model.dto.request.SpecializationInfoRequest;
 import com.example.demo.model.dto.request.SpecializationToAlumniRequest;
 import com.example.demo.model.dto.response.SpecializationInfoResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 
 public class SpecializationService {
 

@@ -9,7 +9,7 @@ import com.example.demo.model.dto.request.PlaylistInfoRequest;
 import com.example.demo.model.dto.request.PlaylistToAlumniRequest;
 import com.example.demo.model.dto.response.PlaylistInfoResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -21,12 +21,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class PlaylistService {
 
     private final ObjectMapper mapper;
     private final PlaylistRepo playlistRepo;
-    private AlumniService alumniService;
+    private final AlumniService alumniService;
+
 
 
     public PlaylistInfoResponse createPlaylist(PlaylistInfoRequest playlistInfoRequest) {
@@ -52,11 +53,9 @@ public class PlaylistService {
         } else {
             playlistPage = playlistRepo.findAll(playlistPageRequest);
         }
-
         List<PlaylistInfoResponse> content = playlistPage.getContent().stream()
                 .map(p -> mapper.convertValue(p, PlaylistInfoResponse.class))
                 .collect(Collectors.toList());
-
         return new PageImpl<>(content, playlistPageRequest, playlistPage.getTotalElements());
     }
 
@@ -75,15 +74,15 @@ public class PlaylistService {
     public void addPlaylistToAlumni(PlaylistToAlumniRequest request) {
         Playlist playlist = playlistRepo.findById(request.getPlaylistId()).orElseThrow(() ->
                 new CustomException("Playlist not found", HttpStatus.NOT_FOUND));
-
         Alumni alumniFromDB = alumniService.getAlumniFromDB(request.getAlumniId());
-
         if (alumniFromDB == null) {
             throw new CustomException("Alumni not found", HttpStatus.NOT_FOUND);
         }
-
         playlist.setAlumni(alumniFromDB);
         alumniFromDB.getPlaylists().add(playlist);
         playlistRepo.save(playlist);
     }
+
+
+
 }
